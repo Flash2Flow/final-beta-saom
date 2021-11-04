@@ -73,7 +73,7 @@
 
                                                     var test = '{{.Token}}'
 
-                                                    const url = 'http://localhost:1010/api?title=auth&login=' + login + '&password=' + password + '&jwt=' + test
+                                                    const url = 'http://45.128.207.175:1010/api?title=auth&login=' + login + '&password=' + password + '&jwt=' + test
 
                                                     const xhr = new XMLHttpRequest()
                                                     xhr.open('GET', url)
@@ -184,13 +184,16 @@
                                                alert("Запрет русских букав и знаков")
                                                return false
                                             }else{
-                                                                                                     const url = 'http://localhost:1010/api?title=reg&login=' + login + '&email=' + email + '&password=' + password + '&jwt=' +{{ .Token }}
+                                               var test = '{{.Token}}'
+
+
+
+                                                                                                     const url = 'http://45.128.207.175:1010/api?title=reg&login=' + login + '&email=' + email + '&password=' + password + '&jwt=' + test
                                                                                                      const xhr = new XMLHttpRequest()
                                                                                                      xhr.open('GET', url)
                                                                                                      xhr.onload = () => {
-                                                                                                     console.log(xhr.response)
-                                                                                                     console.log(JSON.parse(xhr.response))
-                                                                                                         const rest = JSON.parse(xhr.response)
+                                                                                                     var test = JSON.stringify(xhr.response)
+                                                                                                         const rest = JSON.parse(test)
                                                                                                      }
                                                                                                      xhr.send()
                                             }
