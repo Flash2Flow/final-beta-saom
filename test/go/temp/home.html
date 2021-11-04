@@ -1,0 +1,32 @@
+{{ define "home_page" }}
+
+<html lang="ru">
+<head>
+  <head>
+    <meta charset="utf-8">
+    <title>Моя тестовая страница</title>
+  </head>
+  <body>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <button id="test">Click</button>
+    <script>
+$(document).ready(function() {
+    $("#test").click(function(){
+        alert("button");
+        const url = 'http://localhost:2020/api?login=yes&password=12324'
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', url)
+        xhr.onload = () => {
+        console.log(JSON.parse(xhr.response))
+                const chlen = JSON.parse(xhr.response)
+                console.log(chlen['Status'])
+        }
+        xhr.send()
+    });
+});
+
+    </script>
+  </body>
+</html>
+
+{{ end }}

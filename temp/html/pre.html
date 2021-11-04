@@ -1,0 +1,54 @@
+{{ define "pre_loader"}}
+<script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+<div id="load" class="load">
+    <div class="intro">
+
+
+        <p id="example3"></p>
+
+    </div>
+</div>
+<script src="static/js/jquery-3.6.0.js" type="text/javascript"></script>
+<script src="static/js/typeit.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+<script>
+            $(window).on('load', function () {
+            console.log("Не учатся ничему некоторые, и учится, не хотят. Кина американского насмотрелись, Или крышу срывает от жадности? Ты ему про аномалии, он тебе про хабар. Ни о чём думать не хотят, кроме бабок, Пока кишки по веткам не разбросает.")
+                $('#link_reg').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"
+                    $('#block_one').show();//включает/выключает элемент id="text"
+                    $('#block_two').hide();
+                });
+
+                $('#link_auth').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"
+                    $('#block_one').hide();//включает/выключает элемент id="text"
+                    $('#block_two').show();
+                });
+
+                $('#btn_auth').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"
+                    let login = $('#login_auth').val()
+                    let password = $('#password_auth').val()
+                    //redirect
+                });
+
+                $('#btn_reg').on("click", function(){ //вешаем событие на клик по кнопке id="btn1"
+
+
+                });
+
+                $('#load').delay(17500).fadeOut('slow');
+                $('#block_two').delay(17600).show(0);
+
+
+                $('#example3').typeIt({
+                    strings: ["Добро пожаловать на Бета-Тест сайта сервера по майкнрафту.", "SWORD ART ONLINE", "После прогрузки сайта,авторизируйтесь или зарегистрируйтесь", "затем, нажмите кнопку Home, что бы вызвать панель.", "Если у вас ноутбук,зажмите клавишу *Fn и стрелку в лево*"],
+                    speed: 50,
+                    autoStart: false
+                });
+
+
+            });
+
+</script>
+<script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+
+{{ end }}

@@ -1,0 +1,217 @@
+{{ define "home_page"}}
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/static/css/iconsfont.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="shortcut icon" href="/static/image/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,700;1,160&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <title>SAOM | Auth</title>
+</head>
+<body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+
+
+        {{ template "pre_loader"}}
+
+
+        <!--authorization-->
+
+        <form onsubmit="return false;" id="authorization" name="form1">
+            <div class="block_two" id="block_two">
+                <h1 class="info_join">Log in_::</h1>
+
+                <div class="input_account">
+                    <h1 class="point_account">:login</h1>
+                    <input type="text" placeholder=":input account" name="login">
+                </div>
+
+                <div class="input_passwordd">
+                    <h1 class="point_passwordd">:password</h1>
+                    <input type="password" placeholder=":input password" name="password">
+                </div>
+
+                <a href="#block_one" class="dont_account" id="link_reg">Don't have an account?</a>
+
+                <button class="bn3637" id="btn_auth"onclick="">Submit</button>
+            </div>
+        </form>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+        <script>
+                $(document).ready(function() {
+                    $("#btn_auth").click(function(){
+                        //check inputs then get on api values
+
+                            var login = document.forms["form1"]["login"].value;
+                            var password = document.forms["form1"]["password"].value;
+                            if (login == "") {
+                                alert("Необходимо ввести имя");
+                                return false;
+                            }else{
+                                if (password == "") {
+                                   alert("Необходимо ввести пароль");
+                                   return false;
+                                }else{
+                                    if (login.length < 3){
+                                        alert("логин меньше 3");
+                                        return false;
+                                    }else{
+                                        if (password.length < 3){
+                                            alert("пароль меньше 3");
+                                            return false;
+                                        }else{
+                                        if (login.search(/[^a-zA-Z0-9_]+/) === 0){
+                                        alert("Ошибка в логине")
+                                        }else{
+
+                                                    var test = '{{.Token}}'
+
+                                                    const url = 'http://localhost:1010/api?title=auth&login=' + login + '&password=' + password + '&jwt=' + test
+
+                                                    const xhr = new XMLHttpRequest()
+                                                    xhr.open('GET', url)
+                                                    xhr.onload = () => {
+                                                        var test = JSON.stringify(xhr.response)
+                                                        const rest = JSON.parse(test)
+                                                        console.log(rest['Status'])
+                                                        console.log(rest.status)
+                                                        if (rest['Status'] == "Pass inc"){
+                                                            alert("Yes")
+                                                        }else{
+                                                            alert("No")
+                                                        }
+                                                    }
+                                                    xhr.send()
+                                        }
+                                        }
+
+                                    }
+                                }
+                            }
+
+                    });
+                });
+
+        </script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+
+        <!--Register-->
+        <form onsubmit="return false;" id="registration" name="form2">
+
+            <div class="block_one" id="block_one">
+                <h1 class="info_register">Registration_::</h1>
+
+                <h1 class="info_two">If you registration,<br>u accept our rules,<br>and require your<br> personal information<br> to our system.</h1>
+
+                <div class="input_login">
+                    <h1 class="point_login">:login</h1>
+                    <input type="text" placeholder=":input login" name="login" id="login">
+                </div>
+
+                <div class="input_email">
+                    <h1 class="point_email">:email</h1>
+                    <input type="email" placeholder=":input email" name="email" id="email">
+                </div>
+
+                <div class="input_password">
+                    <h1 class="point_password">:password</h1>
+                    <input type="password" placeholder=":input password" name="password" id="password">
+                </div>
+
+                <div class="input_repassword">
+                    <h1 class="point_repassword">:repeat password</h1>
+                    <input type="password" placeholder=":input re_password" name="repassword" id="re_password">
+                </div>
+
+                <a href="#" class="have_account" id="link_auth">Have an account?</a>
+
+                <button class="bn36378" id="btn_reg">Submit</button>
+            </div>
+
+        </form>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+        <script>
+
+            $(document).ready(function() {
+                $("#btn_reg").click(function(){
+                    //check inputs then get on api values
+                                                var login = document.forms["form2"]["login"].value;
+                                                 var email = document.forms["form2"]["email"].value;
+                                                var password = document.forms["form2"]["password"].value;
+                                                 var repassword = document.forms["form2"]["repassword"].value;
+
+                     if (login == ""){
+                        alert("Login cant be nil")
+                        return false
+                     }else{
+                        if (password == ""){
+                            alert("password cant be nil")
+                            return false
+                        }else{
+                           if (email == ""){
+                               alert("email cant be nil")
+                               return false
+                           }else{
+                               if (password != repassword){
+                                   alert("Пароли должны быть одинаковые")
+                                   return false
+                               }else{
+                                   if (login.length < 3 ){
+                                       alert("логин меньше 3 символов")
+                                       return false
+                                   }else{
+                                       if (password.length < 3 ){
+                                            alert("пароль меньше 3 символов")
+                                            return false
+
+                                       }else{
+                                          if (email.length < 10){
+                                            alert("Почта меньше 10 символов")
+                                            return false
+                                       }else{
+                                            //err next
+                                            if (login.search(/[^a-zA-Z0-9_]+/) === 0){
+                                               alert("Запрет русских букав и знаков")
+                                               return false
+                                            }else{
+                                                                                                     const url = 'http://localhost:1010/api?title=reg&login=' + login + '&email=' + email + '&password=' + password + '&jwt=' +{{ .Token }}
+                                                                                                     const xhr = new XMLHttpRequest()
+                                                                                                     xhr.open('GET', url)
+                                                                                                     xhr.onload = () => {
+                                                                                                     console.log(xhr.response)
+                                                                                                     console.log(JSON.parse(xhr.response))
+                                                                                                         const rest = JSON.parse(xhr.response)
+                                                                                                     }
+                                                                                                     xhr.send()
+                                            }
+                                       }
+                                       }
+                                   }
+                               }
+                           }
+
+                        }
+                     }
+
+
+
+
+                });
+            });
+
+        </script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+</body>
+</html>
+{{ end }}
