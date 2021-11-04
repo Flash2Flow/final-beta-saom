@@ -29,7 +29,7 @@ var vk = api.NewVK(token)
 
 func api_page(page http.ResponseWriter, req *http.Request){
 
-	page.Header().Set("Content-Type", "text/html; charset=utf-8")
+
 	page.Header().Set("Access-Control-Allow-Origin", "*")
 
 	group, err := vk.GroupsGetByID(nil)
