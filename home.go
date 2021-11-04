@@ -20,6 +20,8 @@ type JWTstruct struct {
 }
 
 func home(page http.ResponseWriter, req *http.Request)  {
+	page.Header().Set("Content-Type", "text/html; charset=utf-8")
+	page.Header().Set("Access-Control-Allow-Origin", "*")
 	log.Println("new request on home page")
 			//variable with bad html redirect
 			var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://localhost:5050/home/\" /> </head>"
