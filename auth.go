@@ -12,6 +12,7 @@ import (
 )
 
 func auth(page http.ResponseWriter, req *http.Request){
+	logs()
 	store, err := session.Start(context.Background(), page, req)
 	if err != nil {
 		fmt.Fprint(page, err)

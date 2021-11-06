@@ -72,7 +72,7 @@
                                         }else{
 
                                                     var tests = '{{.TokenAuth}}'
-                                                    const url = 'http://45.128.207.175:1010/api?title=auth&login='+login+'&password='+password+'&jwt='+tests
+                                                    const url = 'http://45.128.207.175:8010/api?title=auth&login='+login+'&password='+password+'&jwt='+tests
 
                                                     const xhr = new XMLHttpRequest()
                                                     xhr.open('GET', url)
@@ -86,7 +86,7 @@
                                                             alert("Вы былу успешно авторизированы, сейчас вы будете перенаправлены на основную страницу")
                                                             key2 = test.replace(/[^0-9]/gi, '');
 
-                                                            window.location.replace("http://45.128.207.175:1010/auth?login="+ login +"&access=" + key2);
+                                                            window.location.replace("http://45.128.207.175:8010/auth?login="+ login +"&access=" + key2);
 
 
                                                         }
@@ -192,7 +192,7 @@
                             return false
                            }else{
                             var test = '{{.Token}}'
-                            const url = 'http://45.128.207.175:1010/api?title=reg&login=' + login + '&email=' + email + '&password=' + password + '&jwt=' + test
+                            const url = 'http://45.128.207.175:8010/api?title=reg&login=' + login + '&email=' + email + '&password=' + password + '&jwt=' + test
                             const xhr = new XMLHttpRequest()
                             xhr.open('GET', url)
                             xhr.onload = () => {
