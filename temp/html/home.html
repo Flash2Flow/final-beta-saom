@@ -71,21 +71,32 @@
                                         alert("Ошибка в логине")
                                         }else{
 
-                                                    var test = '{{.Token}}'
-
-                                                    const url = 'http://45.128.207.175:1010/api?title=auth&login=' + login + '&password=' + password + '&jwt=' + test
+                                                    var tests = '{{.TokenAuth}}'
+                                                    const url = 'http://localhost:1010/api?title=auth&login='+login+'&password='+password+'&jwt='+tests
 
                                                     const xhr = new XMLHttpRequest()
                                                     xhr.open('GET', url)
                                                     xhr.onload = () => {
                                                         var test = JSON.stringify(xhr.response)
                                                         const rest = JSON.parse(test)
-                                                        console.log(rest['Status'])
-                                                        console.log(rest.status)
-                                                        if (rest['Status'] == "Pass inc"){
-                                                            alert("Yes")
-                                                        }else{
-                                                            alert("No")
+                                                            str = test.replace(/[^a-z]/gi, '');
+                                                            console.log(test)
+                                                            console.log(str)
+                                                        if (str == 'Statusokauth'){
+                                                            alert("Вы былу успешно авторизированы, сейчас вы будете перенаправлены на основную страницу")
+                                                            key2 = test.replace(/[^0-9]/gi, '');
+
+                                                            window.location.replace("http://localhost:1010/auth?login="+ login +"&access=" + key2);
+
+
+                                                        }
+
+                                                        if (rest == '{"Status":"no, bad pass"}'){
+                                                            alert("Неправильный пароль")
+                                                        }
+
+                                                        if (rest == '{"Status":"no one user with this login"}'){
+                                                            alert("Такого пользователя не существует")
                                                         }
                                                     }
                                                     xhr.send()
@@ -141,75 +152,67 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
         <script>
+            $(document).ready(function(){
+                 $("#btn_reg").click(function(){
+                   var login = document.forms["form2"]["login"].value;
+                   var email = document.forms["form2"]["email"].value;
+                   var password = document.forms["form2"]["password"].value;
+                   var repassword = document.forms["form2"]["repassword"].value;
 
-            $(document).ready(function() {
-                $("#btn_reg").click(function(){
-                    //check inputs then get on api values
-                                                var login = document.forms["form2"]["login"].value;
-                                                 var email = document.forms["form2"]["email"].value;
-                                                var password = document.forms["form2"]["password"].value;
-                                                 var repassword = document.forms["form2"]["repassword"].value;
-
-                     if (login == ""){
-                        alert("Login cant be nil")
-                        return false
+                   if (login == ""){
+                    alert("Login cant be nil")
+                    return false
+                   }else{
+                    if (password == ""){
+                     alert("Password cant be nil")
+                     return false
+                    }else{
+                     if (email == ""){
+                      alert("Email cant be nil")
+                      return false
                      }else{
-                        if (password == ""){
-                            alert("password cant be nil")
-                            return false
+                      if (password != repassword){
+                       alert("Password cant be != repassword")
+                       return false
+                      }else{
+                        if (login.length <3 ){
+                         alert("Login cant be < 3 ")
+                         return false
                         }else{
-                           if (email == ""){
-                               alert("email cant be nil")
-                               return false
+                         if (password.length <3 ){
+                          alert("Password cant be < 3 ")
+                          return false
+                         }else{
+                          if ( email.length <10 ){
+                           alert("Email cant be < 10 ")
+                           return false
+                          }else{
+                           if (login.search(/[^a-zA-Z0-9_]+/) === 0){
+                            alert("Запрет русских букав и знаков")
+                            return false
                            }else{
-                               if (password != repassword){
-                                   alert("Пароли должны быть одинаковые")
-                                   return false
-                               }else{
-                                   if (login.length < 3 ){
-                                       alert("логин меньше 3 символов")
-                                       return false
-                                   }else{
-                                       if (password.length < 3 ){
-                                            alert("пароль меньше 3 символов")
-                                            return false
+                            var test = '{{.Token}}'
+                            const url = 'http://localhost:1010/api?title=reg&login=' + login + '&email=' + email + '&password=' + password + '&jwt=' + test
+                            const xhr = new XMLHttpRequest()
+                            xhr.open('GET', url)
+                            xhr.onload = () => {
+                            var test = JSON.stringify(xhr.response)
+                            const rest = JSON.parse(test)
+                            console.log(rest)
+                            }
+                            xhr.send()
 
-                                       }else{
-                                          if (email.length < 10){
-                                            alert("Почта меньше 10 символов")
-                                            return false
-                                       }else{
-                                            //err next
-                                            if (login.search(/[^a-zA-Z0-9_]+/) === 0){
-                                               alert("Запрет русских букав и знаков")
-                                               return false
-                                            }else{
-                                               var test = '{{.Token}}'
-
-
-
-                                                                                                     const url = 'http://45.128.207.175:1010/api?title=reg&login=' + login + '&email=' + email + '&password=' + password + '&jwt=' + test
-                                                                                                     const xhr = new XMLHttpRequest()
-                                                                                                     xhr.open('GET', url)
-                                                                                                     xhr.onload = () => {
-                                                                                                     var test = JSON.stringify(xhr.response)
-                                                                                                         const rest = JSON.parse(test)
-                                                                                                     }
-                                                                                                     xhr.send()
-                                            }
-                                       }
-                                       }
-                                   }
-                               }
                            }
-
+                          }
                         }
+                       }
+                      }
                      }
+                    }
+                   }
 
 
-
-
-                });
+                 });
             });
 
         </script>
