@@ -9,7 +9,7 @@ import (
 )
 
 func main()  {
-	log.Println("server started with port 1010")
+	log.Println("server started with port 8010")
 	server()
 }
 
@@ -20,11 +20,11 @@ func server()  {
 	http.HandleFunc("/auth", auth)
 	http.HandleFunc("/delete/", delete)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
-	http.ListenAndServe(":1010", nil)
+	http.ListenAndServe(":8010", nil)
 }
 
 func delete(page http.ResponseWriter, req *http.Request){
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:1010/\" /> </head>"
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:8010/\" /> </head>"
 
 	store, err := session.Start(context.Background(), page, req)
 	if err != nil {

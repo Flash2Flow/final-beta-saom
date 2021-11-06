@@ -17,7 +17,7 @@ func auth(page http.ResponseWriter, req *http.Request){
 		fmt.Fprint(page, err)
 		return
 	}
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:5050/home/\" /> </head>"
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:8010/home/\" /> </head>"
 	_, ok := store.Get("active_login")
 
 
