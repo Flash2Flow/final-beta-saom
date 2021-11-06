@@ -14,7 +14,7 @@ func home(page http.ResponseWriter, req *http.Request)  {
 
 	//parse default html files on page
 	temp, err := template.ParseFiles("temp/html/home.html", "temp/html/pre.html")
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://localhost:1010/home/\" /> </head>"
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:1010/home/\" /> </head>"
 	if err != nil {
 		fmt.Fprintf(page, err.Error())
 	}
@@ -69,7 +69,7 @@ func homeActive(page http.ResponseWriter, req *http.Request)  {
 
 	//parse default html files on page
 	temp, err := template.ParseFiles("temp/html/home_a.html")
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://localhost:1010/\" /> </head>"
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:1010/\" /> </head>"
 	if err != nil {
 		fmt.Fprintf(page, err.Error())
 	}

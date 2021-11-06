@@ -24,7 +24,7 @@ func server()  {
 }
 
 func delete(page http.ResponseWriter, req *http.Request){
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://localhost:1010/\" /> </head>"
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:1010/\" /> </head>"
 
 	store, err := session.Start(context.Background(), page, req)
 	if err != nil {
