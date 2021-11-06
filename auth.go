@@ -12,13 +12,15 @@ import (
 )
 
 func auth(page http.ResponseWriter, req *http.Request){
+	page.Header().Set("Access-Control-Allow-Origin", "*")
+	page.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	logs()
 	store, err := session.Start(context.Background(), page, req)
 	if err != nil {
 		fmt.Fprint(page, err)
 		return
 	}
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:8010/home/\" /> </head>"
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://92.255.104.121/home/\" /> </head>"
 	_, ok := store.Get("active_login")
 
 

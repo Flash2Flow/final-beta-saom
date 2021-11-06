@@ -11,10 +11,11 @@ import (
 	"net/http"
 )
 func home(page http.ResponseWriter, req *http.Request)  {
-
+	page.Header().Set("Access-Control-Allow-Origin", "*")
+	page.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	//parse default html files on page
 	temp, err := template.ParseFiles("temp/html/home.html", "temp/html/pre.html")
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:8010/home/\" /> </head>"
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://92.255.104.121/home/\" /> </head>"
 	if err != nil {
 		fmt.Fprintf(page, err.Error())
 	}
@@ -66,10 +67,12 @@ func home(page http.ResponseWriter, req *http.Request)  {
 }
 
 func homeActive(page http.ResponseWriter, req *http.Request)  {
+	page.Header().Set("Access-Control-Allow-Origin", "*")
+	page.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	//parse default html files on page
 	temp, err := template.ParseFiles("temp/html/home_a.html")
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://45.128.207.175:8010/\" /> </head>"
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://92.255.104.121/\" /> </head>"
 	if err != nil {
 		fmt.Fprintf(page, err.Error())
 	}

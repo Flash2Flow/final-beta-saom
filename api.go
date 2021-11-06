@@ -17,6 +17,8 @@ type Cardinal struct {
 
 
 func api_page(page http.ResponseWriter, req *http.Request) {
+	page.Header().Set("Access-Control-Allow-Origin", "*")
+	page.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	log.Println("New request api")
 
 	title := req.FormValue("title")
