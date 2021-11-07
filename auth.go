@@ -3,75 +3,87 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"io/ioutil"
+	"path/filepath"
+
 	"fmt"
 	"github.com/go-session/session"
-	"io/ioutil"
+
 	"log"
 	"net/http"
-	"strconv"
 )
 
-func auth(page http.ResponseWriter, req *http.Request){
+func auth(page http.ResponseWriter, req *http.Request) {
+	//var for slow redirect, in future change on js redirect
+	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=https://92.255.104.121/\" /> </head>"
+	//end var redirect
+
 	page.Header().Set("Access-Control-Allow-Origin", "*")
 	page.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	logs()
+
 	store, err := session.Start(context.Background(), page, req)
 	if err != nil {
 		fmt.Fprint(page, err)
 		return
 	}
-	var Redirect = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=http://92.255.104.121/home/\" /> </head>"
+	var RedirectHome = "<head> <meta http-equiv=\"refresh\" content=\"1;URL=https://92.255.104.121/home/\" /> </head>"
 	_, ok := store.Get("active_login")
-
-
 
 	//if have active session, use active pages
 	if ok {
-
 		//redirect on active page
-		fmt.Fprintf(page, Redirect)
+		fmt.Fprintf(page, RedirectHome)
 
 	}
 
 	login := req.FormValue("login")
-	access := req.FormValue("access")
+	password := req.FormValue("password")
 
-	if login == ""{
-		log.Println("empty login")
-	}else{
-		if access == ""{
-			log.Println("empty access")
-		}else{
-			//get access token
-			JwtFindFile := fmt.Sprintf("users/user_%s.json", login)
-			dat, err := ioutil.ReadFile(JwtFindFile)
-			if err != nil {
-				log.Println("Err 105 line")
 
-			}
-			User := UserFull{}
-			err = json.Unmarshal(dat, &User)
+	_, ok2 := store.Get("jwt")
+	if ok2 {
+
+		users := fmt.Sprintf("users/user_%s.json", login)
+		files, _ := filepath.Glob(users)
+		if files != nil {
+			dat, err := ioutil.ReadFile(users)
 			if err != nil {
-				log.Println("line 111")
+				//err unknown
 			}
-			// check oba
-			UserKey := strconv.Itoa(User.UserKey)
-			if UserKey == access {
-				store.Set("active_login", login)
-				err = store.Save()
-				if err != nil {
-					fmt.Fprint(page, err)
-					return
+
+			UserFull := UserFull{}
+
+			err = json.Unmarshal(dat, &UserFull)
+			if err != nil {
+				return
+			}
+			Md5Password := GetMD5Hash(password)
+			if UserFull.Password == Md5Password {
+				switch login {
+				case "":
+					log.Println("Login nil")
+					fmt.Fprintf(page, Redirect)
+
+				case UserFull.Login:
+					store.Set("active_login", login)
+					err = store.Save()
+					if err != nil {
+						fmt.Fprint(page, err)
+						return
+					}
+
+					logAuth := fmt.Sprintf("User logged: %s", login)
+					log.Println(logAuth)
+					fmt.Fprintf(page, RedirectHome)
 				}
-				http.Redirect(page, req, "/home/", 302)
-				auth := fmt.Sprintf("User auth: %s", login)
-				log.Println(auth)
 			}else{
-				//redirect on home
-				log.Println("bad access")
-				http.Redirect(page, req, "/", 302)
+				log.Println("Bad pass")
+				fmt.Fprintf(page, Redirect)
 			}
-			//create session and redirect
+		}else{
+			log.Println("Have not this user")
+			fmt.Fprintf(page, Redirect)
 		}
+
 	}
 }

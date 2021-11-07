@@ -71,31 +71,24 @@
                                         alert("Ошибка в логине")
                                         }else{
 
-                                                    var tests = '{{.TokenAuth}}'
-                                                    const url = 'http://45.128.207.175:8010/api?title=auth&login='+login+'&password='+password+'&jwt='+tests
+                                                    const url = 'https://92.255.104.121/api?title=auth&login='+login+'&password='+password
 
                                                     const xhr = new XMLHttpRequest()
                                                     xhr.open('GET', url)
                                                     xhr.onload = () => {
                                                         var test = JSON.stringify(xhr.response)
                                                         const rest = JSON.parse(test)
-                                                            str = test.replace(/[^a-z]/gi, '');
-                                                            console.log(test)
-                                                            console.log(str)
-                                                        if (str == 'Statusokauth'){
+
+                                                        if (rest == '{"Status":"ok, can auth"}'){
                                                             alert("Вы былу успешно авторизированы, сейчас вы будете перенаправлены на основную страницу")
-                                                            key2 = test.replace(/[^0-9]/gi, '');
-
-                                                            window.location.replace("http://45.128.207.175:8010/auth?login="+ login +"&access=" + key2);
-
-
+                                                            window.location.replace("https://92.255.104.121/auth?login="+ login + "&password=" + password);
                                                         }
 
-                                                        if (rest == '{"Status":"no, bad pass"}'){
+                                                        if (rest == '{"Status":"bad password"}'){
                                                             alert("Неправильный пароль")
                                                         }
 
-                                                        if (rest == '{"Status":"no one user with this login"}'){
+                                                        if (rest == '{"Status":"have not user"}'){
                                                             alert("Такого пользователя не существует")
                                                         }
                                                     }
@@ -191,14 +184,26 @@
                             alert("Запрет русских букав и знаков")
                             return false
                            }else{
-                            var test = '{{.Token}}'
-                            const url = 'http://45.128.207.175:8010/api?title=reg&login=' + login + '&email=' + email + '&password=' + password + '&jwt=' + test
+                            const url = 'https://92.255.104.121/api?title=reg&login=' + login + '&email=' + email + "&password=" + password
                             const xhr = new XMLHttpRequest()
                             xhr.open('GET', url)
                             xhr.onload = () => {
                             var test = JSON.stringify(xhr.response)
                             const rest = JSON.parse(test)
-                            console.log(rest)
+                                                                                    if (rest == '{"Status":"ok, reg"}'){
+                                                                                        alert("Вы былу успешно авторизированы, сейчас вы будете перенаправлены на основную страницу")
+                                                                                        window.location.replace("https://92.255.104.121/auth?login="+ login + "&password=" + password);
+                                                                                    }
+                                                                                    if (rest == '{"Status":"no new user"}'){
+                                                                                        alert("Такой пользователь уже существует")
+                                                                                    }
+
+                                                                                    if (rest == '{"Status":"no new email"}'){
+                                                                                        alert("Такая почта уже существует")
+                                                                                    }
+
+
+
                             }
                             xhr.send()
 
